@@ -100,21 +100,20 @@ class SRUApi(AbstractAPI):
     def get(self):
         self.make_query()
         res = requests.get(self.URL, params=self.query)
-
         return res
 
     def parse(self):
         res = searchRetrieveResponse()
         extra_resdata = extraResponseData()
 
-        root = ElementTree.fromstring(self.get().text)
+        root = ElementTree.fromstring(self.get().text.encode("utf-8"))
 
         res.version = root.find('{http://www.loc.gov/zing/srw/}version').text
         res.numberOfRecords = root.find('{http://www.loc.gov/zing/srw/}numberOfRecords').text
         res.nextRecordPosition = root.find('{http://www.loc.gov/zing/srw/}numberOfRecords').text
 
         # extraResponseData
-        ext_root = ElementTree.fromstring(root.find('{http://www.loc.gov/zing/srw/}extraResponseData').text)
+        ext_root = ElementTree.fromstring(root.find('{http://www.loc.gov/zing/srw/}extraResponseData').text.encode("utf-8"))
         for child in ext_root:
 
             name = child.get('name')
@@ -156,7 +155,7 @@ class SRUApi(AbstractAPI):
             tmp_record.recordPosition = record.find('{http://www.loc.gov/zing/srw/}recordPosition').text
 
             tmp_record_data = RecordData()
-            record_data_root = ElementTree.fromstring(record.find('{http://www.loc.gov/zing/srw/}recordData').text)
+            record_data_root = ElementTree.fromstring(record.find('{http://www.loc.gov/zing/srw/}recordData').text.encode("utf-8"))
 
             title = record_data_root.find('{http://purl.org/dc/elements/1.1/}title')
             if title is not None and title.text:

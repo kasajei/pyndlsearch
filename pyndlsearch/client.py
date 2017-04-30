@@ -6,9 +6,10 @@ from abc import abstractmethod
 from abc import ABCMeta
 
 from .api.sru import SRUApi
+from six import with_metaclass
 
 
-class AbstractClient(metaclass=ABCMeta):
+class AbstractClient(with_metaclass(ABCMeta)):
     @abstractmethod
     def __init__(self, query):
         self.api = None

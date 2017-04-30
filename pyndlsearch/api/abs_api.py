@@ -4,8 +4,10 @@
 from abc import abstractmethod
 from abc import ABCMeta
 
+from six import with_metaclass
 
-class AbstractAPI(metaclass=ABCMeta):
+
+class AbstractAPI(with_metaclass(ABCMeta)):
 
     @abstractmethod
     def make_query(self):

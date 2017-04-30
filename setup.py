@@ -37,6 +37,7 @@ setup(
     url='http://github.com/nocotan/pyndlsearch/',
     packages=packages,
     install_requires=[
-        'requests>=2.10.0'
+        'requests>=2.10.0',
+        'six>=1.10.0',
     ],
 )
